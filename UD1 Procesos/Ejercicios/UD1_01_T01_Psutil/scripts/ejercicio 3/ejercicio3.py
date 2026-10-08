@@ -16,11 +16,24 @@ while True:
         for p in procesos:
             print(f"PID: {p.info['pid']} || NOMBRE: {p.info['name']} || USERNAME: {p.info['username']}" )
     elif opcion == "2":
-        print("\nFILTRAR POR PROCESOS DE MEMORIA")
+        print("\nFILTRAR POR USO DE MEMORIA")
+        procesos = [p for p in psutil.process_iter(attrs=['pid', 'name', 'username']) if p.memory_percent()>1]
+        procesos.sort(key=lambda p: p.memory_percent(), reverse=True)
+        print(procesos)
+
     elif opcion == "3":
-        print("Hola3")
+        print("\nFILTRAR POR USO DE CPU")
+        procesos = [p for p in psutil.process_iter(attrs=['pid', 'name', 'username','memory_info']) if p.cpu_percent(interval=0.1)>0.001]
+        procesos.sort(key=lambda p: p.cpu_percent(interval=0.1))
+        print(procesos)
+
     elif opcion == "4":
-        print("Hola4")
+        print("\nARBOL DE PROCESOS")
+        def pintar_arbol(pid, sep=u'\u2514'+u'\u2500'+u'\u2500'):
+            p = psutil.Process(pid)
+            print(f"{sep}PID: {pid}, Nombre: {p.name()}")
+            for h in p.children():
+                pintar_arbol(h.pid, "|  "+sep)
     elif opcion == "5":
         print("Bye ye")
         break
