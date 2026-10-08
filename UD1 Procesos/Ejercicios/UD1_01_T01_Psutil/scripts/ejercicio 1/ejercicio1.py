@@ -1,6 +1,5 @@
 import datetime
 import json
-import os
 import psutil
 
 
@@ -11,7 +10,7 @@ def mostrar_info():
 
     # Información de CPUs
     print(f"Número de CPUs: {psutil.cpu_count()}")
-    print(f"Frecuencia de cada CPU: {psutil.cpu_freq()}")
+    print(f"Frecuencia de cada CPU: {psutil.cpu_freq(percpu=True)}")
     print(f"Uso de CPU por CPUs: {psutil.cpu_percent(interval=1)}%")
 
     # Información de memoria

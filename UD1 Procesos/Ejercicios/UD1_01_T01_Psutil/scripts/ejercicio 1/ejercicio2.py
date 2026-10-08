@@ -1,60 +1,37 @@
-import datetime
-import json
-import os
 import psutil
 
-
-ESTADO = {
-    "running": "iniciado",
-    "stopped": "parado",
-    "paused": "pausado",
-    "start_pending": "iniciando",
-    "stop_pending": "deteniendo",
-}
-
-INICIO = {
-    "automatic": "automático",
-    "manual": "manual",
-    "disabled": "deshabilitado",
-}
-
-
-def mostrar_todos():
-    print(f"{'NOMBRE'} | {'PID'} | {'ESTADO'} | {'TIPO INICIO'}")
-    print("----------------------------------------------------------" )
-
-    try:
-        info = servicio.as_dict()
-        nombre = info.get("name", "N/A")
-        pid = info.get("pid", "N/A")
-
-        estado = ESTADO.get(info.get("status"), "unknown")
-        inicio = INICIO.get(info.get("start_type"), "unknown")
-
-        print(f"{nombre} | {pid} | {estado} | {inicio}")
-    except Exception:
-        continue
-
-    print()
-
-
-
 while True:
-    print("CONSULTA DE SERVICIOS EN WINDOWS")
-    print("1. Mostrar todos los servicios")
-    print("2. Mostrar servicios filtrados")
-    print("3. Mostrar descripción de un servicio")
+    print("\n--- MENÚ ---")
+    print("1. Mostrar")
+    print("2. Filtrar")
+    print("3. Descripción")
     print("4. Salir")
-    opcion = input("Selecciona una opción: ")
+    op = input("Opción: ")
 
-    if opcion == "1":
-        mostrar_todos()
-    elif opcion == "2":
-        mostrar_filtrados()
-    elif opcion == "3":
-        mostrar_descripcion()
-    elif opcion == "4":
-        print("Bye ye")
+    if op == "1":
+        for s in psutil.win_service_iter():
+            try:
+                info = s.as_dict()
+                print(f"{info['name']}: ({info['pid']}, {info['status']}, {info['start_type']})")
+            except Exception: pass
+
+    elif op == "2":
+        traduccion = {"iniciado": "running", "parado": "stopped", "manual": "manual", "automatico": "automatic"}
+        filtro = set(traduccion.get(p, p) for p in input("Filtra (ej: iniciado automatico): ").lower().split())
+        
+        for s in psutil.win_service_iter():
+            try:
+                info = s.as_dict()
+                if filtro.issubset({info['status'], info['start_type']}):
+                    print(f"{info['name']}: ({info['pid']}, {info['status']}, {info['start_type']})")
+            except Exception: pass
+
+    elif op == "3":
+        nombre = input("Nombre del servicio: ")
+        try:
+            print(f"Descripción: {psutil.win_service_get(nombre).description()}")
+        except Exception:
+            print("Servicio no encontrado.")
+
+    elif op == "4":
         break
-    else:
-        print("Opción no válida")
