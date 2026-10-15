@@ -1,13 +1,36 @@
+import subprocess
+import os
 
-fichero = "alias.txt"
-alias = {}
-with open(fichero, "r") as fichero:
-    alias = { k:v for k,v in list(map(lambda linea: linea.strip("\n").split("="),fichero.readlines()))}
+ruta_fichero = "alias.txt"
 
-# for linea in fichero.readline():
-# # separar la linea en dos partes y meter en el diccionario clave = valor
-# k,v = linea.strip("\n").split("=")
-# alias[k]=v
-# meter cosas en diccionario alias
+def main():
+    print("MiniShell")
+    print("Escribe 'exit' para terminar.\n")
+    
+    while True:
+        try:
+            entrada_usuario = input("> ").strip()
+        except (KeyboardInterrupt, EOFError):
+            print("\nSaliendo...")
+            break
+            
+        if entrada_usuario.lower() == 'exit':
+            print("Saliendo...")
+            break
+            
+        if not entrada_usuario:
+            continue
 
-print(alias)
+        with open(ruta_fichero, "r", encoding="utf-8") as fichero:
+            if entrada_usuario in fichero.read():
+                print("Encontrado")
+            else:
+                print(entrada_usuario)
+
+        # try:
+        #     subprocess.run(comando_final, shell=True, text=True)
+        # except Exception as e:
+        #     print(f"Error al ejecutar el comando: {e}")
+
+if __name__ == "__main__":
+    main()
