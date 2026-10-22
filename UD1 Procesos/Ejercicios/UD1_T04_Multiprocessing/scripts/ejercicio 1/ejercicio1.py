@@ -7,7 +7,7 @@ def llenar_lista(lista):
 
     for i in range(0,100):
         lista[i] = i + 1
-        time.sleep(random.random())
+        time.sleep(random.random()/2)
 
     print(f"[Proceso 1]: {list(lista)}")
 
@@ -16,7 +16,7 @@ def producto_lista(lista):
 
     for i in range(0,100):
         lista[i] = lista[i] * 2
-        time.sleep(random.random())
+        time.sleep(random.random()/2)
 
     print(f"[Proceso 2]: {list(lista)}")
 
@@ -31,3 +31,5 @@ if __name__ == "__main__":
     proceso2.start()
     proceso.join()
     proceso2.join()
+
+    print(f"Lista desde main: ︃{mylist[:]}")
