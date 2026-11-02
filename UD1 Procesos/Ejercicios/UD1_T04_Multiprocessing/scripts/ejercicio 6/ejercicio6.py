@@ -12,13 +12,13 @@ if __name__ == '__main__':
     contador = multiprocessing.Value('i',0)
     lock = multiprocessing.Lock()
 
-    proceso1 = multiprocessing.Process(target=incrementar, args=(contador, lock))
-    proceso2 = multiprocessing.Process(target=incrementar, args=(contador, lock))
+    p1 = multiprocessing.Process(target= incrementar, args=(contador, lock))
+    p2 = multiprocessing.Process(target= incrementar, args=(contador, lock))
 
-    proceso1.start()
-    proceso2.start()
+    p1.start()
+    p2.start()
 
-    proceso1.join()
-    proceso2.join()
+    p1.join()
+    p2.join()
 
     print(f"Valor final del contador: {contador.value}")
