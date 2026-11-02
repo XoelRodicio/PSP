@@ -1,0 +1,12 @@
+[
+    {
+        "id": "dir",
+        "comando": ["dir"],
+        "intervalo": 3
+    },
+    {
+        "id": "ping",
+        "comando": ["ping", "-n", "1", "as.com"],
+        "intervalo": 6
+    }
+]
