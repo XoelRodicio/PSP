@@ -3,7 +3,7 @@ import threading
 class HiloYes(threading.Thread):
     def run(self):
         for i in range(30):
-            print("YES", end="")
+            print("YES ", end="")
 
 class HiloNo(threading.Thread):
     def run(self):
@@ -11,7 +11,6 @@ class HiloNo(threading.Thread):
             print("NO ", end="")
 
 if __name__ == "__main__":
-    print("INICIO")
 
     hiloA = HiloNo()
     hiloB = HiloYes()
@@ -23,3 +22,5 @@ if __name__ == "__main__":
 
     hiloA.join()
     hiloB.join()
+
+    print("\nEjecucion en main")
