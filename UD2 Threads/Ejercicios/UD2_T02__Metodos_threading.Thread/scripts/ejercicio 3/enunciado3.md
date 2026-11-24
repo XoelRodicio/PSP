@@ -1,0 +1,1 @@
+Crea un hilo en cuyo método run() muestre los valores entre 1 y 100 acompañados del identificador del hilo y su nombre. Introduce una espera de 0.1 segundo antes de imprimir cada número. Haz que el hilo principal espere por la finalización del hilo secundario utilizando el método join(). Mide el tiempo total de ejecución del programa.¡

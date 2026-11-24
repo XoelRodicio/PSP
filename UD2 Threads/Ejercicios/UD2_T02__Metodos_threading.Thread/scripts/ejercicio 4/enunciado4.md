@@ -1,0 +1,1 @@
+Utilizando la clase creada en el ejercicio anterior, crea 5 hilos a partir de esta, almacénalos en una lista, cambiales su nombre por miHilo-n, lánzalos y finalmente espera por ellos desde el hilo principal utilizando el método join(). Mide el tiempo total de ejecución del programa.
